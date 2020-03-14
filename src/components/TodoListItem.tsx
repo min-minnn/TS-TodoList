@@ -1,30 +1,48 @@
-import React from "react";
-import styled from "styled-components";
-import { MdClear } from "react-icons/md";
+import React from 'react';
+import styled from 'styled-components';
+import { MdClear } from 'react-icons/md';
+import { Todo } from './TodoList';
 
 interface TodoListItemProps {
-  todos:
-  {
-    id: number;
-    text: string;
-    done: boolean;
-  }
+  todos: Todo;
+  onToggle: (id: number) => void;
+  onRemove: (id: number) => void;
 }
 
-const Todo = styled.p`
+const TextBlock = styled.div`
+  display: inline;
+`;
+
+const TodoItem = styled.div`
+  display: flex;
+  justify-content: space-between;
   background: #4470ff;
-  width: 320px;
-  height: 21px;
-  border-radius: 4px;
-  padding: 7px;
+  width: 20rem;
+  border-radius: 0.25rem;
+  padding: 0.4375rem;
   color: white;
+  margin-bottom: 1rem;
+
+  svg {
+    color: #ff476c;
+    padding-right: 0.5rem;
+
+    &:hover {
+      color: #ffffff;
+    }
+  }
+
+  & + & {
+    margin-top: 1rem;
+  }
 `
 
-const TodoListItem: React.FC<TodoListItemProps> = ({ todos }) => {
+const TodoListItem: React.FC<TodoListItemProps> = ({ todos, onToggle, onRemove }) => {
   return (
-    <div key={todos.id}>
-      <Todo>{todos.text}<MdClear /></Todo>
-    </div>
+    <TodoItem key={todos.id}>
+      <TextBlock onClick={() => onToggle(todos.id)}>{todos.text}</TextBlock>
+      <MdClear onClick={() => onRemove(todos.id)} />
+    </TodoItem>
   );
 }
 

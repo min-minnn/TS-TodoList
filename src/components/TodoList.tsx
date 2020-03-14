@@ -1,13 +1,15 @@
-import React, { useState } from "react";
-import TodoListItem from "./TodoListItem";
+import React, { useState } from 'react';
+import TodoListItem from './TodoListItem';
+import TodoInput from './TodoInput';
 
-interface Todo {
+export interface Todo {
   id: number;
   text: string;
   done: boolean;
-}
+};
 
-const Todos: Array<Todo> = [
+function TodoList(){
+  const [todos, setTodos] = useState<Todo[]>([
   {
     id: 1,
     text: '밥 먹기',
@@ -22,14 +24,37 @@ const Todos: Array<Todo> = [
     id: 3,
     text: '놀기',
     done: false,
-  }
-]
+  },
+]);
 
-function TodoList(){
+const onCreate = (text: string) => {
+  const todo = {
+    id: todos.length ? todos[todos.length - 1].id + 1 : 1,
+    text,
+    done: false
+  };
+
+  setTodos(todos => todos.concat(todo));
+};
+
+const onRemove = (id: number) => {
+  setTodos(todos.filter(todo => todo.id !== id));
+};
+
+const onToggle = (id: number) => {
+  setTodos(
+    todos.map(todo =>
+      todo.id === id ? { ...todo, done: !todo.done } : todo,
+    ),
+  );
+};
   return (
     <div>
-      {Todos.map(todo => 
-        <TodoListItem todos={todo} />  
+      <TodoInput onCreate={onCreate} />
+      {todos.map(todo => 
+        <div key={todo.id}>
+          <TodoListItem onToggle={onToggle} onRemove={onRemove} todos={todo} />  
+        </div>
       )}
     </div>
   )

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled, { css } from 'styled-components';
 import { MdClear } from 'react-icons/md';
 import { Todo } from './TodoList';
 
@@ -9,8 +9,15 @@ interface TodoListItemProps {
   onRemove: (id: number) => void;
 }
 
-const TextBlock = styled.div`
+const TextBlock = styled.div<{ done: boolean }>`
   display: inline;
+
+  ${props =>
+    props.done &&
+    css`
+      text-decoration: line-through;
+    `
+  };
 `;
 
 const TodoItem = styled.div`
@@ -39,8 +46,8 @@ const TodoItem = styled.div`
 
 const TodoListItem: React.FC<TodoListItemProps> = ({ todos, onToggle, onRemove }) => {
   return (
-    <TodoItem key={todos.id}>
-      <TextBlock onClick={() => onToggle(todos.id)}>{todos.text}</TextBlock>
+    <TodoItem>
+      <TextBlock onClick={() => onToggle(todos.id)} done={todos.done}>{todos.text}</TextBlock>
       <MdClear onClick={() => onRemove(todos.id)} />
     </TodoItem>
   );

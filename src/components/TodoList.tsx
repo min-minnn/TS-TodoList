@@ -8,7 +8,7 @@ export interface Todo {
   done: boolean;
 };
 
-function TodoList(){
+const TodoList: React.FC = () => {
   const [todos, setTodos] = useState<Todo[]>([
   {
     id: 1,

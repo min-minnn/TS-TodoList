@@ -39,7 +39,7 @@ const Input = styled.input`
 `
 
 const TodoInput: React.FC<TodoInputProps> = ({ onCreate }) => {
-  const [value, setValue] = useState('');
+  const [value, setValue] = useState<string>('');
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);

@@ -51,10 +51,13 @@ const onToggle = (id: number) => {
   return (
     <div>
       <TodoInput onCreate={onCreate} />
-      {todos.map(todo => 
-        <div key={todo.id}>
-          <TodoListItem onToggle={onToggle} onRemove={onRemove} todos={todo} />  
-        </div>
+      {todos.map(todo =>
+        <TodoListItem
+          key={todo.id}
+          onToggle={onToggle}
+          onRemove={onRemove}
+          todos={todo} 
+        />
       )}
     </div>
   )
